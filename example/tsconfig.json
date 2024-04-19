@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "react-native-fusion-login-page": ["../src/index"],
+      "react-native-fusion-login-page/*": ["../src/*"]
+    }
+  }
+}
