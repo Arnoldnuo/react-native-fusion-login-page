@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import * as ReactNativeFusionLoginPage from 'react-native-fusion-login-page';
+import { LoginScreen } from 'react-native-fusion-login-page';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>{ReactNativeFusionLoginPage.hello()}</Text>
+      <Text>
+        <LoginScreen />
+      </Text>
     </View>
   );
 }
