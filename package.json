@@ -29,6 +29,8 @@
   "license": "MIT",
   "homepage": "https://github.com/Arnoldnuo/react-native-fusion-login-page#readme",
   "dependencies": {
+    "react-native-ali-onepass": "^3.4.0",
+    "react-native-gesture-handler": "^2.16.0",
     "react-native-ui-lib": "^7.20.3",
     "usehooks-ts": "^3.1.0"
   },
