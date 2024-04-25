@@ -67,3 +67,9 @@ export const signIn = async (client_id: string, productId: string, token: string
 
   return (await response.json()).accessToken?.token;
 };
+
+export const getJwtByAliToken = async (api: string, token: string) => {
+  const requestOptions = { method: "GET" };
+  const reponse = await fetch(`${api}?token=${token}`, requestOptions)
+  return (await reponse.json())?.data?.access_token;
+};

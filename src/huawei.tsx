@@ -14,6 +14,8 @@ export interface LoginScreenProps {
   client_id: string;
   client_secret: string;
   productId: string;
+  jwtApiForHw?: string;
+  onJWTGot?: any;
 }
 
 export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) => {

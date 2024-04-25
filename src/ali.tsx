@@ -12,6 +12,7 @@ export interface AutoLoginScreenProps {
   onFail: any;
   onCancle: any;
   autoLoginUIConfig: any;
+  jwtApiForAli?: string;
 }
 export const AutoLoginScreen = (props: AutoLoginScreenProps) => {
   const init = async () => {
@@ -31,7 +32,13 @@ export const AutoLoginScreen = (props: AutoLoginScreenProps) => {
           const { code, msg, requestCode, token, vendorName } = data;
           const numberCode = Number(code);
           if (numberCode === OnePass.RESULT_CODES["600000"]) {
-            props.onLogin('ali', token);
+            await props.onLogin('ali', token);
+            await OnePass.hideLoginLoading();
+            await OnePass.quitLoginPage();
+          } else if (numberCode === OnePass.RESULT_CODES["600001"]) {
+            console.log('唤起授权页成功');
+          } else {
+            props.onFail({ from: 'ali auto login onTokenSuccess error', data });
             await OnePass.hideLoginLoading();
             await OnePass.quitLoginPage();
           }

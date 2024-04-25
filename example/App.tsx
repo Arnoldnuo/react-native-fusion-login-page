@@ -1,9 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet, Text, View } from 'react-native';
-
 import { LoginScreen } from "react-native-fusion-login-page";
 
-import { aliSecretKey, client_id, client_secret, productId } from './config';
+import { aliSecretKey, client_id, client_secret, jwtApiForAli, jwtApiForHw, productId } from './config';
 
 export default function App() {
   return <LoginScreen
@@ -12,11 +10,17 @@ export default function App() {
     }}
     onCancle={() => { console.log('取消登录') }}
     aliSecretKey={aliSecretKey as string}
-    autoLoginUIConfig={{
-      navColor: '#fffff',
+    aliAutoLoginUIConfig={{
+      // navColor: '#000000',
     }}
-    client_id={client_id}
-    client_secret={client_secret}
-    productId={productId}
+    hwClientId={client_id}
+    hwClientSecret={client_secret}
+    hwProductId={productId}
+
+    jwtApiForHw={jwtApiForHw}
+    jwtApiForAli={jwtApiForAli}
+    onJWTGot={(token) => {
+      console.log('jwt token:', token);
+    }}
   />;
 };
