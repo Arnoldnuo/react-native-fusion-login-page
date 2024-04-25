@@ -1,6 +1,6 @@
 {
   "name": "react-native-fusion-login-page",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "react native融合登录app，结合阿里云和华为云的能力",
   "main": "build/index.js",
   "types": "build/index.d.ts",
