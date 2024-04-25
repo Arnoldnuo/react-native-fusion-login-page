@@ -7,7 +7,7 @@ import { SmsLoginScreen } from './huawei';
 import { getJwtByAliToken } from './api';
 export interface LoginScreenProps {
   style?: StyleProp<ViewStyle>;
-  onLogin: any;
+  onLogin?: any;
   onCancle: any;
   onJWTGot?: (token: string) => any;
 
