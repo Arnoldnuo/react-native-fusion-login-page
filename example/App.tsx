@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { LoginScreen } from "react-native-fusion-login-page";
 
-import { aliSecretKey, client_id, client_secret, jwtApiForAli, jwtApiForHw, productId } from './config';
+import { aliSecretKey, client_id, client_secret, jwtApiForAli, jwtApiForHw, productId, key, iv } from './config';
 
 export default function App() {
   return <LoginScreen
@@ -19,6 +19,8 @@ export default function App() {
 
     jwtApiForHw={jwtApiForHw}
     jwtApiForAli={jwtApiForAli}
+    jwtApiKeyForHw={key}
+    jwtApiIvForHw={iv}
     onJWTGot={(token) => {
       console.log('jwt token:', token);
     }}

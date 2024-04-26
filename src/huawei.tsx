@@ -41,15 +41,14 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
     setIsCounting(true);
 
     const access_token = await getToken(client_id, client_secret);
-    console.log('access_token: ', access_token);
     accessTokenRef.current = access_token;
     await sendCode(client_id, productId, access_token, phone);
   };
 
   const onLogin = async () => {
-    const token = await signIn(client_id, productId, accessTokenRef.current, phone, code);
+    const { token, uid, phone: hwphone } = await signIn(client_id, productId, accessTokenRef.current, phone, code);
     if (token) {
-      props.onLogin && props.onLogin('huawei', token);
+      props.onLogin && props.onLogin('huawei', { token, uid, phone: hwphone });
     } else {
       setErr('验证码错误，请重试');
     }

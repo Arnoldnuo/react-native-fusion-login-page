@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleProp, ViewStyle } from "react-native";
 import { AutoLoginScreen } from './ali';
 import { SmsLoginScreen } from './huawei';
-import { getJwtByAliToken } from './api';
+import { getJwtByAliToken, getJwtByHwToken } from './api';
 export interface LoginScreenProps {
   style?: StyleProp<ViewStyle>;
   onLogin?: any;
@@ -19,6 +19,8 @@ export interface LoginScreenProps {
   hwClientSecret: string;
   hwProductId: string;
   jwtApiForHw?: string;
+  jwtApiKeyForHw?: string;
+  jwtApiIvForHw?: string
 }
 
 export const LoginScreen = (props: LoginScreenProps) => {
@@ -34,10 +36,10 @@ export const LoginScreen = (props: LoginScreenProps) => {
         console.log(error);
         setShowAutoLogin(false);
       }}
-      onLogin={async (from: string, token: string) => {
-        onLogin(from, token);
-        if (jwtApiForAli && onJWTGot) {
-          const jwt = await getJwtByAliToken(jwtApiForAli, token);
+      onLogin={async (from: string, info: any) => {
+        onLogin(from, info);
+        if (from === 'ali' && jwtApiForAli && onJWTGot) {
+          const jwt = await getJwtByAliToken(jwtApiForAli, info?.token);
           if (jwt) {
             onJWTGot(jwt);
           } else {
@@ -50,7 +52,17 @@ export const LoginScreen = (props: LoginScreenProps) => {
     />
     :
     <SmsLoginScreen client_id={hwClientId} client_secret={hwClientSecret} productId={hwProductId}
-      onLogin={onLogin}
+      onLogin={async (from: string, info: any) => {
+        onLogin(from, info);
+        if (from === 'huawei' && jwtApiForHw && onJWTGot) {
+          const jwt = await getJwtByHwToken(jwtApiForHw, { ...info, jwtApiKeyForHw: props.jwtApiKeyForHw, jwtApiIvForHw: props.jwtApiIvForHw });
+          if (jwt) {
+            onJWTGot(jwt);
+          } else {
+            throw new Error('通过hw token获取登录jwt失败');
+          }
+        }
+      }}
       onCancle={onCancle}
       jwtApiForHw={jwtApiForHw}
     />
