@@ -37,7 +37,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
         setShowAutoLogin(false);
       }}
       onLogin={async (from: string, info: any) => {
-        onLogin(from, info);
+        onLogin && onLogin(from, info);
         if (from === 'ali' && jwtApiForAli && onJWTGot) {
           const jwt = await getJwtByAliToken(jwtApiForAli, info?.token);
           if (jwt) {
@@ -53,7 +53,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
     :
     <SmsLoginScreen client_id={hwClientId} client_secret={hwClientSecret} productId={hwProductId}
       onLogin={async (from: string, info: any) => {
-        onLogin(from, info);
+        onLogin && onLogin(from, info);
         if (from === 'huawei' && jwtApiForHw && onJWTGot) {
           const jwt = await getJwtByHwToken(jwtApiForHw, { ...info, jwtApiKeyForHw: props.jwtApiKeyForHw, jwtApiIvForHw: props.jwtApiIvForHw });
           if (jwt) {
