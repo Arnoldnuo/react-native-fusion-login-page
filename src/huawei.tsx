@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Alert, StyleProp, ViewStyle } from "react-native";
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextField, Button, View, Text, Incubator, Modal, Assets, NumberInput } from 'react-native-ui-lib';
 import { useCountdown } from "usehooks-ts";
 import { getToken, sendCode, signIn } from './api';
@@ -35,6 +36,8 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
     }
   }, [number]);
 
+  const { top } = useSafeAreaInsets();
+
   const onSendCodePress = async (phone: string) => {
     countdownCtrl.resetCountdown();
     countdownCtrl.startCountdown();
@@ -55,7 +58,7 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
   };
 
   return (
-    <View paddingH-20>
+    <View paddingH-20 style={{ paddingTop: top + 5 }}>
       <Modal.TopBar
         title={'验证码登录'}
         onCancel={() => { props.onCancle && props.onCancle() }}
