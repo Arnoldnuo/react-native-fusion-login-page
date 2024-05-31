@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 // 华为云认证服务，发送验证码
 import React, { useEffect, useState, useRef } from 'react';
-import { Alert, StyleProp, ViewStyle } from "react-native";
+import { Alert, Platform, StyleProp, ViewStyle } from "react-native";
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextField, Button, View, Text, Incubator, Modal, Assets, NumberInput } from 'react-native-ui-lib';
@@ -58,7 +58,7 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
   };
 
   return (
-    <View paddingH-20 style={{ paddingTop: top + 5 }}>
+    <View paddingH-20 style={{ paddingTop: Platform.OS === 'android' ? top : 0 }}>
       <Modal.TopBar
         title={'验证码登录'}
         onCancel={() => { props.onCancle && props.onCancle() }}
