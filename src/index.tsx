@@ -20,13 +20,15 @@ export interface LoginScreenProps {
   hwProductId: string;
   jwtApiForHw?: string;
   jwtApiKeyForHw?: string;
-  jwtApiIvForHw?: string
+  jwtApiIvForHw?: string;
+
+  mockLoginApi?: string;
 }
 
 export const LoginScreen = (props: LoginScreenProps) => {
   const { onLogin, onCancle, onJWTGot,
     hwClientId, hwClientSecret, hwProductId, jwtApiForHw,
-    aliAutoLoginUIConfig, aliSecretKey, jwtApiForAli } = props;
+    aliAutoLoginUIConfig, aliSecretKey, jwtApiForAli, mockLoginApi } = props;
   const [showAutoLogin, setShowAutoLogin] = useState(true);
   return (showAutoLogin ?
     <AutoLoginScreen
@@ -51,10 +53,12 @@ export const LoginScreen = (props: LoginScreenProps) => {
       jwtApiForAli={jwtApiForAli}
     />
     :
-    <SmsLoginScreen client_id={hwClientId} client_secret={hwClientSecret} productId={hwProductId}
+    <SmsLoginScreen client_id={hwClientId} client_secret={hwClientSecret} productId={hwProductId} mockLoginApi={mockLoginApi}
       onLogin={async (from: string, info: any) => {
         onLogin && onLogin(from, info);
-        if (from === 'huawei' && jwtApiForHw && onJWTGot) {
+        if (from === 'mock' && info && onJWTGot) {
+          onJWTGot(info);
+        } else if (from === 'huawei' && jwtApiForHw && onJWTGot) {
           const jwt = await getJwtByHwToken(jwtApiForHw, { ...info, jwtApiKeyForHw: props.jwtApiKeyForHw, jwtApiIvForHw: props.jwtApiIvForHw });
           if (jwt) {
             onJWTGot(jwt);

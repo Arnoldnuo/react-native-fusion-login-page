@@ -6,7 +6,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextField, Button, View, Text, Incubator, Modal, Assets, NumberInput } from 'react-native-ui-lib';
 import { useCountdown } from "usehooks-ts";
-import { getToken, sendCode, signIn } from './api';
+import { getToken, mockLogin, sendCode, signIn } from './api';
 
 export interface LoginScreenProps {
   style?: StyleProp<ViewStyle>;
@@ -17,10 +17,11 @@ export interface LoginScreenProps {
   productId: string;
   jwtApiForHw?: string;
   onJWTGot?: any;
+  mockLoginApi?: string;
 }
 
 export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) => {
-  const { client_id, client_secret, productId } = props;
+  const { client_id, client_secret, productId, mockLoginApi } = props;
   const accessTokenRef = useRef('');
   const countStart = 30;
   const [number, countdownCtrl] = useCountdown({ countStart, countStop: 0 });
@@ -49,6 +50,10 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
   };
 
   const onLogin = async () => {
+    if (mockLoginApi && phone === '88888888888') {
+      const jwt = await mockLogin(mockLoginApi, phone, code);
+      jwt && props.onLogin && props.onLogin('mock', jwt);
+    }
     const { token, uid, phone: hwphone } = await signIn(client_id, productId, accessTokenRef.current, phone, code);
     if (token) {
       props.onLogin && props.onLogin('huawei', { token, uid, phone: hwphone });

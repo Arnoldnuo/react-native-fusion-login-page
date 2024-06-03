@@ -111,3 +111,13 @@ export const getJwtByHwToken = async (api: string, info: any) => {
   const response = await fetch(`${api}`, requestOptions);
   return (await response.json())?.data?.access_token;
 };
+
+export const mockLogin = async (api: string, phone: string, code: string) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({ phone, code });
+  const requestOptions = { method: "POST", headers: myHeaders, body: raw };
+
+  const token = (await (await fetch(api, requestOptions)).json())?.data?.access_token;
+  return token;
+};
