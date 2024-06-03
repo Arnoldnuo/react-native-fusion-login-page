@@ -37,7 +37,7 @@ export const AutoLoginScreen = (props: AutoLoginScreenProps) => {
             await OnePass.quitLoginPage();
           } else if (numberCode === OnePass.RESULT_CODES["600001"]) {
             console.log('唤起授权页成功');
-          } else {
+          } else if (numberCode === OnePass.RESULT_CODES["700001"]) {
             props.onFail({ from: 'ali auto login onTokenSuccess error', data });
             await OnePass.hideLoginLoading();
             await OnePass.quitLoginPage();
