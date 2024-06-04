@@ -53,6 +53,7 @@ export const SmsLoginScreen = gestureHandlerRootHOC((props: LoginScreenProps) =>
     if (mockLoginApi && phone === '88888888888') {
       const jwt = await mockLogin(mockLoginApi, phone, code);
       jwt && props.onLogin && props.onLogin('mock', jwt);
+      return;
     }
     const { token, uid, phone: hwphone } = await signIn(client_id, productId, accessTokenRef.current, phone, code);
     if (token) {
